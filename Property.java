@@ -6,13 +6,13 @@ public class Property {
     private final String hostName;
     private final int maximumNumberOfGuests;
     private final double rating;
-    private final int pricePerNight;
-    private final int serviceFeePerNight;
-    private final int cleaningFee;
+    private final double pricePerNight;
+    private final double serviceFeePerNight;
+    private final double cleaningFee;
     private final int weeklyDiscount;
 
     public Property(String name, String location, String description, String type, String hostName, 
-    int maximumNumberOfGuests, double rating, int pricePerNight, int serviceFeePerNight, int cleaningFee, 
+    int maximumNumberOfGuests, double rating, double pricePerNight, double serviceFeePerNight, double cleaningFee, 
     int weeklyDiscount){
         this.name = name;
         this.location = location;
@@ -55,11 +55,11 @@ public class Property {
 
     public double getRating() {        return rating;    }
 
-    public int getPricePerNight() {        return pricePerNight;    }
+    public double getPricePerNight() {        return pricePerNight;    }
 
-    public int getServiceFeePerNight() {        return serviceFeePerNight;    }
+    public double getServiceFeePerNight() {        return serviceFeePerNight;    }
 
-    public int getCleaningFee() {        return cleaningFee;    }
+    public double getCleaningFee() {        return cleaningFee;    }
 
     public int getWeeklyDiscount() {        return weeklyDiscount;    }
 
