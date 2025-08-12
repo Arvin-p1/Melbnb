@@ -1,5 +1,3 @@
-
-
 public class Property {
     private final String name;
     private final String location;
@@ -14,7 +12,7 @@ public class Property {
     private final int weeklyDiscount;
 
     public Property(String name, String location, String description, String type, String hostName, 
-    int maximumNumberOfGuests, int rating, int pricePerNight, int serviceFeePerNight, int cleaningFee, 
+    int maximumNumberOfGuests, double rating, int pricePerNight, int serviceFeePerNight, int cleaningFee, 
     int weeklyDiscount){
         this.name = name;
         this.location = location;
