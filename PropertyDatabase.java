@@ -16,8 +16,8 @@ public class PropertyDatabase implements Searchable<Property> {
         @Override
     public List<Property> search(String keyword) {//searches for location but must be called search because of interface template
         String location;
-        if (keyword == null || keyword.trim().isEmpty()){
-            throw new IllegalArgumentException("Incorrect Location");
+        if (keyword == null || keyword.trim().isEmpty()){//if the input is empty to begin with or after trimming then
+            throw new IllegalArgumentException("Incorrect Location");//this is just here for now i will move all of the err handeling into input validator class later
         } else {
             location = keyword.trim().toLowerCase();
         }

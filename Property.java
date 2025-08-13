@@ -27,19 +27,6 @@ public class Property {
         this.weeklyDiscount = weeklyDiscount;
     }
 
-    public Property(){
-        this.name = "Name";
-        this.location = "Location";
-        this.description = "Description";
-        this.type = "Type";
-        this.hostName = "Host Name";
-        this.maximumNumberOfGuests = 0;
-        this.rating = 0;
-        this.pricePerNight = 0;
-        this.serviceFeePerNight = 0;
-        this.cleaningFee = 0;
-        this.weeklyDiscount = 0;
-    }
 
     public String getName() {        return name;}
 
