@@ -91,6 +91,7 @@ public class PropertyDatabase implements Searchable<Property> {
                 double serviceFeePerNight = Double.parseDouble(columns[8]);
                 double cleaningFee = Double.parseDouble(columns[9]);
                 int weeklyDiscount = Integer.parseInt(columns[10]);
+                
 
                 Property property = new Property(
                         name, location, description, type, hostName,

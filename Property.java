@@ -55,7 +55,7 @@ public class Property {
         return "Property [name=" + name + ", location=" + location + ", description=" + description + ", type=" + type
                 + ", hostName=" + hostName + ", maximumNumberOfGuests=" + maximumNumberOfGuests + ", rating=" + rating
                 + ", pricePerNight=" + pricePerNight + ", serviceFeePerNight=" + serviceFeePerNight + ", cleaningFee="
-                + cleaningFee + ", weeklyDiscount=" + weeklyDiscount + "]";
+                + cleaningFee + ", weeklyDiscount="  /**+ weeklyDiscount */;
     }
 
     

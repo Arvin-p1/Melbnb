@@ -1,42 +1,34 @@
 
 public class Customer {
-    private String name;
-    private String surName;
-    private String eMail;
-    private int numOfGuests;
-    private int stayDuration;
+    private String customerName;
+    private String customerSurname;
+    private String customerEmail;
 
-    public Customer(String name, String surName, String eMail, int numOfGuests, int stayDuration){//i will have a static methid and i will call that to calculate the stay duration
-        this.name = name;
-        this.surName = surName;
-        this.eMail = eMail;
-        this.numOfGuests = numOfGuests;
-        this.stayDuration = stayDuration;
+    public Customer(String customerName, String customerSurname, String customerEmail) {
+        this.customerName = customerName;
+        this.customerSurname = customerSurname;
+        this.customerEmail = customerEmail;
     }
 
-    public String getName() {        return name;    }
+    public String getCustomerName() {        return customerName;    }
 
-    public void setName(String name) {        this.name = name;    }
+    public void setCustomerName(String customerName) {        this.customerName = customerName;    }
 
-    public String getSurName() {        return surName;    }
+    public String getCustomerSurname() {        return customerSurname;    }
 
-    public void setSurName(String surName) {        this.surName = surName;    }
+    public void setCustomerSurname(String customerSurname) {        this.customerSurname = customerSurname;    }
 
-    public String geteMail() {        return eMail;    }
+    public String getFullName() {        return customerName + " " + customerSurname;    }
 
-    public void seteMail(String eMail) {        this.eMail = eMail;    }
+    public String getCustomerEmail() {        return customerEmail;    }
 
-    public int getNumOfGuests() {        return numOfGuests;    }
-
-    public void setNumOfGuests(int numOfGuests) {        this.numOfGuests = numOfGuests;    }
-
-    public int getStayDuration() {        return stayDuration;    }
-
-    public void setStayDuration(int stayDuration) {        this.stayDuration = stayDuration;    }
+    public void setCustomerEmail(String customerEmail) {        this.customerEmail = customerEmail;    }
 
     @Override
     public String toString() {
-        return "Customer name=" + name + ", surName=" + surName + ", eMail=" + eMail + ", numOfGuests=" + numOfGuests
-                + ", stayDuration=" + stayDuration;
-    }    
+        return "Customer [customerName=" + customerName + ", customerSurname=" + customerSurname + ", customerEmail="
+                + customerEmail + "]";
+    }
+    
+    
 }
