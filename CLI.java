@@ -1,7 +1,9 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class CLI {
     private Property currentProperty;
+    private List<Property> currentProperties;
     private Booking currentBooking;
     private Customer currentCustomer;
     private String csvPath = "./Melbnb.csv";
@@ -13,8 +15,8 @@ public class CLI {
 
     public void run(){
         boolean isRunning = true;
+        System.out.println("Welcome to Melbnb!");
         while(isRunning){
-            System.out.println("Welcome to Melbnb!");
             applyBoarders("Select from main menu");
             System.out.println(" 1) Search by location");
             System.out.println(" 2) Browse by type of place");
@@ -22,7 +24,7 @@ public class CLI {
             System.out.println(" 4) Exit");
             System.out.print("Please select: ");
             int choice = verifyINT();
-            if(choice == 0){continue;}
+            if(choice == -1){continue;}// -1 means that verify int function threw err
             switch (choice){
                 case 1:
                 searchByLocation();
@@ -67,16 +69,22 @@ public class CLI {
                 return Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
                 erorrMessage("Invalid Input.");
-                return 0;
+                return -1;
             }
         }
     }
 
-    public String verifyString(){
-        try{
-            return scanner.nextLine().trim();
+    public String verifyString() {
+        try {
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.isEmpty()) {
+                erorrMessage("Please enter a non-empty value.");
+                return "error";
+            } else{
+             return input;   
+            }
         } catch (Exception e) {
-            System.out.println("Something went wrong. Please try again.");
+            erorrMessage("Input error.");
             return "error";
         }
     }
@@ -84,22 +92,34 @@ public class CLI {
 
     public void searchByLocation() {
         boolean isRunning = true;
+        System.out.print("Please provide a location: ");//moved these out of loop
+        String locationInput = verifyString();
+        
         while (isRunning) {
-            System.out.print("Please provide a location: ");
-            String location = verifyString();
-            if (location.contains("error")){continue;} else {
-                propertyDatabase.search(location);
+            if ("error".equals(locationInput)){continue;} else {
+                currentProperties = propertyDatabase.search(locationInput);
             }
-            //Property results = 
+
             applyBoarders("Select from matching list");
-            
-            switch () {
-                case 1:
-                    
-                    break;
-            
-                default:
-                    break;
+            for (int i = 0; i < currentProperties.size(); i++) {
+                Property property = currentProperties.get(i);
+                System.out.printf("%d) %s (%s, %s)  Rating: %.1f  $%.2f/night%n",
+                        i + 1, property.getName(), property.getType(), property.getLocation(), property.getRating(), property.getPricePerNight());
+            }
+            int quitBtn = currentProperties.size()+1;
+            System.out.println( quitBtn +")" + " Go to main menu");
+            System.out.print("Please select: ");
+            int choice = verifyINT();
+            if ( choice == -1){
+                continue;
+            } else if (choice == quitBtn) {
+                return;
+            } else{
+                // either
+                // currentProperty = currentProperties.get(choice);
+                // bookpropertiesfunction(currentProperty);
+                // or
+                // bookpropertiesfunction(currentProperties.get(choice));
             }
         }
     }

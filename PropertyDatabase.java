@@ -14,14 +14,7 @@ public class PropertyDatabase implements Searchable<Property> {
 
 
         @Override
-    public List<Property> search(String keyword) {//searches for location but must be called search because of interface template
-        String location;
-        if (keyword == null || keyword.trim().isEmpty()){//if the input is empty to begin with or after trimming then
-            throw new IllegalArgumentException("Incorrect Location");//this is just here for now i will move all of the err handeling into input validator class later
-        } else {
-            location = keyword.trim().toLowerCase();
-        }
-
+    public List<Property> search(String location) {//searches for location but must be called search because of interface template
         List<Property> matchedProperties = new ArrayList<>();
 
         for (Property property : properties){
@@ -30,7 +23,7 @@ public class PropertyDatabase implements Searchable<Property> {
             }
         }
         if(matchedProperties.size() == 0){
-            System.err.print("0 Matches found.");
+            System.err.println("0 Matches found.");
         }
         return matchedProperties;    
     }
@@ -51,7 +44,7 @@ public class PropertyDatabase implements Searchable<Property> {
             }
         }
         if (matchedProperties.size() == 0) {
-            System.err.print("0 Matches found.");
+            System.err.println("0 Matches found.");
         }
         return matchedProperties;
     }
