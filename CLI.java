@@ -21,16 +21,11 @@ public class CLI {
             System.out.println(" 3) Filter by rating");
             System.out.println(" 4) Exit");
             System.out.print("Please select: ");
-            int choice = 0;
-            try {
-                choice = Integer.parseInt(scanner.nextLine());// taking in as string parsing it to an int otherwise it creates a loop
-            } catch (NumberFormatException e) {
-                erorrMessage("Invalid Input.");
-                continue;//continue causes only the invalid input err show
-            }
+            int choice = verifyINT();
+            if(choice == 0){continue;}
             switch (choice){
                 case 1:
-                System.out.println("you chose 1");
+                searchByLocation();
                 break;
                 case 2:
                 System.out.println("you chose 1");
@@ -63,6 +58,50 @@ public class CLI {
         System.out.println("################################################################################");
         System.out.println(dynamicString + message);
         System.out.println("################################################################################");
+    }
+
+
+    public int verifyINT(){
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                erorrMessage("Invalid Input.");
+                return 0;
+            }
+        }
+    }
+
+    public String verifyString(){
+        try{
+            return scanner.nextLine().trim();
+        } catch (Exception e) {
+            System.out.println("Something went wrong. Please try again.");
+            return "error";
+        }
+    }
+
+
+    public void searchByLocation() {
+        boolean isRunning = true;
+        while (isRunning) {
+            System.out.print("Please provide a location: ");
+            String location = verifyString();
+            if (location.contains("error")){continue;} else {
+                propertyDatabase.search(location);
+            }
+            //Property results = 
+            applyBoarders("Select from matching list");
+            
+            switch () {
+                case 1:
+                    
+                    break;
+            
+                default:
+                    break;
+            }
+        }
     }
 
     //If the user chooses not to proceed,the program will go to the main menu
