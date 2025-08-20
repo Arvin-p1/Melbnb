@@ -1,15 +1,14 @@
-public final class CostCalculations {
-    
+public final class CostCalculations {//holds all cost calculation related functions that i could think of but yet to be implimented
     private static final int week = 7;
     
     private CostCalculations() {}//empty constructor
 
 
-    public static int stayDuration(Booking booking) {
-        return booking.getStayDuration(); // will throw if dates invalid (good)
+    public static int stayDuration(Booking booking) {//a getter for a getter might change
+        return booking.getStayDuration();
     }
 
-    public static boolean isDiscounted(Property property, Booking booking) {
+    public static boolean isDiscounted(Property property, Booking booking) {//checks if a property 
         if (stayDuration(booking) >= week && property.getWeeklyDiscount() > 0) {
             return true;
         } else {
@@ -17,12 +16,12 @@ public final class CostCalculations {
         }
     }
 
-    public static double baseNightly(Property property) {//price per night
+    public static double baseNightly(Property property) {//price per night might change
         return property.getPricePerNight();
     }
 
 
-    public static double nightlyRateAfterDiscount(Property property, Booking booking) {
+    public static double nightlyRateAfterDiscount(Property property, Booking booking) {//discounted rate per night
         double basePrice = baseNightly(property);
         if (isDiscounted(property, booking)) {
             return basePrice * (1 - (property.getWeeklyDiscount() / 100.0));
@@ -36,22 +35,21 @@ public final class CostCalculations {
     }
 
 
-    public static double accommodationTotalWithDiscount(Property property, Booking booking) {
+    public static double accommodationTotalWithDiscount(Property property, Booking booking) {//total before discount
         return nightlyRateAfterDiscount(property, booking) * stayDuration(booking);
     }
 
-    public static double serviceFeeTotal(Property property, Booking booking) {
+    public static double serviceFeeTotal(Property property, Booking booking) {//total service fee
         return property.getServiceFeePerNight() * stayDuration(booking);
     }
 
-    public static double cleaningFee(Property property) {
+    public static double cleaningFee(Property property) {//cleaningfee
         return property.getCleaningFee();
     }
 
 
     public static double grandTotal(Property property, Booking booking) {
-        return accommodationTotalWithDiscount(property, booking)
-                + serviceFeeTotal(property, booking)
+        return accommodationTotalWithDiscount(property, booking) + serviceFeeTotal(property, booking)
                 + cleaningFee(property);
     }
 
@@ -60,7 +58,7 @@ public final class CostCalculations {
         boolean discount = isDiscounted(property, booking);
         booking.setIsDiscounted(discount);
         booking.setDiscountedPricePerNight(nightlyRateAfterDiscount(property, booking));
-        booking.setTotalAmount(grandTotal(property, booking));
+        booking.setTotalAmount(grandTotal(property, booking));//not yet impelimented so i might change later
     }
 }
 

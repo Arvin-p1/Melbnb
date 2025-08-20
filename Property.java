@@ -1,4 +1,4 @@
-public class Property {
+public class Property {//blueprint, getters, setters for object instances
     private final String name;
     private final String location;
     private final String description;
@@ -11,7 +11,7 @@ public class Property {
     private final double cleaningFee;
     private final int weeklyDiscount;
 
-    public Property(String name, String location, String description, String type, String hostName, 
+    public Property(String name, String location, String description, String type, String hostName, //class constructor
     int maximumNumberOfGuests, double rating, double pricePerNight, double serviceFeePerNight, double cleaningFee, 
     int weeklyDiscount){
         this.name = name;
@@ -27,7 +27,7 @@ public class Property {
         this.weeklyDiscount = weeklyDiscount;
     }
 
-
+    //getters and setters
     public String getName() {        return name;}
 
     public String getLocation() {        return location;    }
@@ -50,12 +50,12 @@ public class Property {
 
     public int getWeeklyDiscount() {        return weeklyDiscount;    }
 
-    @Override
+    @Override// to string
     public String toString() {
         return "Property [name=" + name + ", location=" + location + ", description=" + description + ", type=" + type
                 + ", hostName=" + hostName + ", maximumNumberOfGuests=" + maximumNumberOfGuests + ", rating=" + rating
                 + ", pricePerNight=" + pricePerNight + ", serviceFeePerNight=" + serviceFeePerNight + ", cleaningFee="
-                + cleaningFee + ", weeklyDiscount="  /**+ weeklyDiscount */;
+                + cleaningFee + ", weeklyDiscount="  + weeklyDiscount;
     }
 
     

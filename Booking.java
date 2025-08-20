@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-
+//blueprint, getters, setters for object instances
 public class Booking {
 
     private String customerName;
@@ -15,7 +15,7 @@ public class Booking {
     private boolean isDiscounted;
     private double discountedPricePerNight;
     
-
+    //class contructor method
     public Booking(String customerName, String customerEmail, String selectedProperty, String propertyHostName, 
             int numOfGuests, LocalDate checkInDate, LocalDate checkOutDate, double totalAmount, boolean isDiscounted, double discountedPricePerNight){
 
@@ -31,7 +31,7 @@ public class Booking {
                 this.discountedPricePerNight = discountedPricePerNight;
     }
 
-
+    //getter and setter methods
     public String getCustomerName() {        return customerName;    }
 
 
@@ -76,11 +76,11 @@ public class Booking {
 
     public int getStayDuration() {
         if (checkInDate == null || checkOutDate == null) {
-            throw new IllegalStateException("Dates fields incomplete");
+            System.err.println("Dates fields incomplete");//will sort err handeling later
         }
         long days = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
         if (days <= 0)
-            throw new IllegalArgumentException("Checkout date must be diffrent to Checkin");
+            System.err.println("Checkout date must be diffrent to Checkin");
         return (int) days;
     }
 
@@ -96,7 +96,7 @@ public class Booking {
 
     public void setDiscountedPricePerNight(double discountedPricePerNight) {this.discountedPricePerNight = discountedPricePerNight;}
     
-
+    //tostring method
     @Override
     public String toString() {
         return "Booking" +

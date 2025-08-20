@@ -14,7 +14,7 @@ public class PropertyDatabase implements Searchable<Property> {
 
 
         @Override
-    public List<Property> search(String location) {//searches for location but must be called search because of interface template
+    public List<Property> search(String location) {//filters for location but must be called search because of interface template
         List<Property> matchedProperties = new ArrayList<>();
 
         for (Property property : properties){
@@ -25,10 +25,10 @@ public class PropertyDatabase implements Searchable<Property> {
         if(matchedProperties.size() == 0){
             System.err.println("0 Matches found.");
         }
-        return matchedProperties;    
+        return matchedProperties;//returns an empty list or a list of mateched propety objects
     }
 
-    public List<Property> filterByPropertyType(String keyword){
+    public List<Property> filterByPropertyType(String keyword){//filters by type category
         String type;
         if( keyword == null || keyword.trim().isEmpty()){
             throw new IllegalArgumentException("Incorrect Type");
@@ -51,10 +51,10 @@ public class PropertyDatabase implements Searchable<Property> {
 
     public List<Property> filterByPropertyRating(double rating){//had to use Double rather than double to compare to null
         if (rating >= 0 && rating <= 5) {
-            throw new IllegalArgumentException("Rating range 0 - 5");
+            System.err.println("Rating range 0 - 5");
         }
 
-        List<Property> matchedProperties = new ArrayList<>();
+        List<Property> matchedProperties = new ArrayList<>();//polymorphism
 
         for (Property property : properties){
             if (property.getRating() >= rating){
@@ -71,7 +71,7 @@ public class PropertyDatabase implements Searchable<Property> {
             scanner.nextLine(); //skip first line aka header row
 
             while (scanner.hasNextLine()) {
-                String[] columns = scanner.nextLine().split(",");
+                String[] columns = scanner.nextLine().split(",");//read and split line and values then store all in array
 
                 String name = columns[0];
                 String location = columns[1];
@@ -86,12 +86,12 @@ public class PropertyDatabase implements Searchable<Property> {
                 int weeklyDiscount = Integer.parseInt(columns[10]);
                 
 
-                Property property = new Property(
+                Property property = new Property(//create property object as we itirate
                         name, location, description, type, hostName,
                         maxGuests, rating, pricePerNight,
                         serviceFeePerNight, cleaningFee, weeklyDiscount);
 
-                properties.add(property);//add each instance in the while loop
+                properties.add(property);//add each instance
             }
         } catch (FileNotFoundException e) {
             System.out.println("CSV file not found at : " + csvFilePath);

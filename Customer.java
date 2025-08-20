@@ -1,15 +1,16 @@
 
-public class Customer {
+public class Customer {// blueprint, getters, setters for object instances
     private String customerName;
     private String customerSurname;
     private String customerEmail;
 
-    public Customer(String customerName, String customerSurname, String customerEmail) {
+    public Customer(String customerName, String customerSurname, String customerEmail) {//constructor method
         this.customerName = customerName;
         this.customerSurname = customerSurname;
         this.customerEmail = customerEmail;
     }
 
+    //getters and setters
     public String getCustomerName() {        return customerName;    }
 
     public void setCustomerName(String customerName) {        this.customerName = customerName;    }
