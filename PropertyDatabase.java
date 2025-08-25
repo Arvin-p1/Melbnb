@@ -50,9 +50,6 @@ public class PropertyDatabase implements Searchable<Property> {
     }
 
     public List<Property> filterByPropertyRating(double rating){//had to use Double rather than double to compare to null
-        if (rating >= 0 && rating <= 5) {
-            System.err.println("Rating range 0 - 5");
-        }
 
         List<Property> matchedProperties = new ArrayList<>();//polymorphism
 
@@ -60,6 +57,9 @@ public class PropertyDatabase implements Searchable<Property> {
             if (property.getRating() >= rating){
                 matchedProperties.add(property);
             }
+        }
+        if (matchedProperties.size() == 0) {
+            System.err.println("0 Matches found.");
         }
         return matchedProperties;
     }

@@ -30,10 +30,10 @@ public class CLI {
                 searchByLocation();
                 break;
                 case 2:
-                System.out.println("you chose 1");
+                searchByType();
                 break;
                 case 3:
-                System.out.println("you chose 1");
+                searchByRating();
                 break;
                 case 4:
                 applyBoarders("Quitting program.");
@@ -78,6 +78,21 @@ public class CLI {
             }
     }
 
+    public double verifyDouble() { //takes input, handels errors and returns feedback
+        try {
+            double input = Double.parseDouble(scanner.nextLine().trim());
+            if (input <= 0) {
+                erorrMessage("Input must be greater than 0.");
+                return -1;
+            } else {
+                return input;
+            }
+        } catch (NumberFormatException e) {
+            erorrMessage("Invalid input.");
+            return -1;
+        }
+    }
+
     public String verifyString() {//takes input, cleans it, handels errors and returns feedback
         try {
             String input = scanner.nextLine().trim().toLowerCase();
@@ -93,44 +108,147 @@ public class CLI {
         }
     }
 
+    public void itirateCurrentProperties(){
+        for (int i = 0; i < currentProperties.size(); i++) {
+            Property property = currentProperties.get(i);
+            System.out.printf("%d) %s ( %s, %s )  Rating: %.1f  $%.2f/night%n",
+                    i + 1, property.getName(), property.getType(), property.getLocation(), property.getRating(),
+                    property.getPricePerNight());
+        }
+        
+    }
+
+    public int handleUserChoice(int choice, int quitBtn){
+        if (choice == -1) {
+            return -1;
+        } else if (choice == quitBtn) {
+            return -2;
+        } else if (choice > quitBtn) {
+            erorrMessage("Input must range from 1 to " + quitBtn);
+            return -1;
+        } else {
+            currentProperty = currentProperties.get(choice);
+            System.out.println("you have chosen a property " + currentProperty);
+            return -3;
+        }
+    }
+
 
     public void searchByLocation() {//filters properties by location
-
-        System.out.print("Please provide a location: "); 
-        String locationInput = verifyString();//moved outside the loop for functional purposes
         
         while (true) {//dont see a reason to break loop atm
+
+            System.out.print("Please provide a location: ");
+            String locationInput = verifyString();
 
             if ("error".equals(locationInput)){continue;} else {//check for errors 
                 currentProperties = propertyDatabase.search(locationInput);//store filtered properties within list
             }
 
             applyBoarders("Select from matching list");//itirares through list and prints with placeholders
-            for (int i = 0; i < currentProperties.size(); i++) {
-                Property property = currentProperties.get(i);
-                System.out.printf("%d) %s (%s, %s)  Rating: %.1f  $%.2f/night%n",
-                        i + 1, property.getName(), property.getType(), property.getLocation(), property.getRating(), property.getPricePerNight());
-            }
+            itirateCurrentProperties();
 
             int quitBtn = currentProperties.size()+1;//dynamic numbering of quit btn
             System.out.println( quitBtn +") Go to main menu");
             System.out.print("Please select: ");
 
-            int choice = verifyINT();//takes input, verifies it then handels accordingly
-            if ( choice == -1 ){//if there was an err
+            int choice = verifyINT();
+            int verifyChoice = handleUserChoice(choice, quitBtn);
+
+            if (verifyChoice == -1) {// -1 == err
                 continue;
-            } else if (choice == quitBtn) {//if quit
+            } else if (verifyChoice == -2) { // -2 == quitbtn
                 return;
-            } else if (choice > quitBtn) {//if input not in range of options
-                erorrMessage("Input must range from 1 to " + quitBtn);
+            } else if (verifyChoice == -3) { // -3 == the next function has been called
+                break;
+            }
+        }
+    }
+
+
+    public void searchByType () {//filters properties by type
+
+        while (true) {
+
+            applyBoarders("Browse by type of place");// i have chosen to hardcode the available types
+            System.out.println(" 1) Private room");// still works perfectly with current data set but not dynamic
+            System.out.println(" 2) Entire place");
+            System.out.println(" 3) Shared room");
+            System.out.println(" 4) Go to main menu");
+
+
+            System.out.print("Please select: ");//grabs type choice and verifies
+            int userInput = verifyINT();
+            if (userInput == -1) {
                 continue;
-            }else{//proceeds to booking selected property
-                System.out.println("you have chosen a property");
-                // either
-                // currentProperty = currentProperties.get(choice);
-                // bookpropertiesfunction(currentProperty);
-                // or
-                // bookpropertiesfunction(currentProperties.get(choice));
+            } else if (userInput == 4) {
+                return;
+            } else if (userInput > 4) {
+                erorrMessage("Input must range from 1 to 4");
+                continue;
+            }
+
+            String type = "";//prepares type based on hadcoded choice
+            if (userInput == 1){
+                type = "Private room";
+            } else if (userInput == 2){
+                type = "Entire place";
+            } else if (userInput == 3){
+                type = "Shared room";
+            }
+            applyBoarders("Select from entire place list");
+
+            currentProperties  = propertyDatabase.filterByPropertyType(type);//grabs the list of filtered properties
+            itirateCurrentProperties();//itirates and prints all filtered properties
+
+            int quitBtn = currentProperties.size() + 1;
+            System.out.println(quitBtn + ") Go to main menu");
+            System.out.print("Please select: ");
+
+            int choice = verifyINT();
+            int verifyChoice = handleUserChoice(choice, quitBtn);
+
+            if (verifyChoice == -1) {// -1 == err
+                continue;
+            } else if (verifyChoice == -2) { // -2 == quitbtn
+                return;
+            } else if (verifyChoice == -3) { // -3 == the next function has been called
+                break;
+            }
+        }
+    }
+
+    public void searchByRating() {//filters properties by rating
+
+        while (true) {
+            System.out.print("Please provide the minimum rating: ");
+            double rating = verifyDouble();// grabs the min rating
+            
+            if (rating == -1) {//handles input
+                continue;
+            } else if (rating > 5){
+                erorrMessage("Input must range from 0 to 5");
+                continue; 
+            }else {
+                currentProperties = propertyDatabase.filterByPropertyRating(rating);//store filtered properties within list
+            }
+
+            applyBoarders("Select from matching list");
+            itirateCurrentProperties();
+
+            int quitBtn = currentProperties.size() + 1;
+            System.out.println(quitBtn + ") Go to main menu");
+            System.out.print("Please select: ");
+
+            int choice = verifyINT();
+            int verifyChoice = handleUserChoice(choice, quitBtn);
+
+            if (verifyChoice == -1) {
+                continue;
+            } else if (verifyChoice == -2) {
+                return;
+            } else if (verifyChoice == -3) {
+                break;
             }
         }
     }
@@ -139,3 +257,4 @@ public class CLI {
     //If the user chooses to reserve,the program will ask the user to provide personal information
     //The personal information includes given name, surname, email address, and number of guests for the stay.
 }
+ 
