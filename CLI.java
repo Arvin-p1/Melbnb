@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -6,6 +8,7 @@ public class CLI {
     private List<Property> currentProperties;//list of all filtered objects to be stored and accessed
     private Booking currentBooking;
     private Customer currentCustomer;
+    private LocalDate today = LocalDate.now();
     private String csvPath = "./Melbnb.csv";
     private Scanner scanner = new Scanner(System.in);
 
@@ -108,6 +111,30 @@ public class CLI {
         }
     }
 
+    public LocalDate verifyDate() { // takes input, handles errors, returns feedback
+    try {
+
+        String input = scanner.nextLine().trim();
+        LocalDate dateInput = LocalDate.parse(input);
+
+        if (input.isEmpty()) {
+            erorrMessage("Field incomplete.");
+            return null;
+        } else if (today.isAfter(dateInput)){
+            erorrMessage("Date must be in the future.");
+            return null;
+        } else {
+           return dateInput; 
+        }
+    } catch (DateTimeParseException e) {
+        erorrMessage("Invalid date, Use yyyy-mm-dd.");
+        return null;
+    } catch (Exception e) {
+        erorrMessage("Input error.");
+        return null;
+    }
+}
+
     public void itirateCurrentProperties(){
         for (int i = 0; i < currentProperties.size(); i++) {
             Property property = currentProperties.get(i);
@@ -127,8 +154,8 @@ public class CLI {
             erorrMessage("Input must range from 1 to " + quitBtn);
             return -1;
         } else {
-            currentProperty = currentProperties.get(choice);
-            System.out.println("you have chosen a property " + currentProperty);
+            currentProperty = currentProperties.get(choice -1 );
+            bookProperty();
             return -3;
         }
     }
@@ -196,8 +223,8 @@ public class CLI {
             } else if (userInput == 3){
                 type = "Shared room";
             }
-            applyBoarders("Select from entire place list");
 
+            applyBoarders("Select from entire place list");
             currentProperties  = propertyDatabase.filterByPropertyType(type);//grabs the list of filtered properties
             itirateCurrentProperties();//itirates and prints all filtered properties
 
@@ -250,6 +277,28 @@ public class CLI {
             } else if (verifyChoice == -3) {
                 break;
             }
+        }
+    }
+
+
+    public void bookProperty(){
+          
+        while(true){
+
+            applyBoarders("Provide dates");
+            System.out.print("Check-in (yyyy-mm-dd): ");
+            LocalDate checkIn = verifyDate();
+            System.out.print("Check-in (yyyy-mm-dd): ");
+            LocalDate checkOut = verifyDate();
+            if (checkIn == null || checkOut == null) {
+                continue; 
+            } else if (checkIn.isAfter(checkOut)){
+                erorrMessage("Check-in has to be before Check-out");
+                continue;
+            }
+
+            applyBoarders("Show property details");
+
         }
     }
 
