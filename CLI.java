@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Scanner;
@@ -7,7 +8,7 @@ public class CLI {
     private Property currentProperty;//variables where the selected instances can be stored and accessed
     private List<Property> currentProperties;//list of all filtered objects to be stored and accessed
     private Booking currentBooking;
-    private Customer currentCustomer;
+    private CostCalculations costCalculations;
     private LocalDate today = LocalDate.now();
     private String csvPath = "./Melbnb.csv";
     private Scanner scanner = new Scanner(System.in);
@@ -20,7 +21,7 @@ public class CLI {
         boolean isRunning = true;
         System.out.println("Welcome to Melbnb!");
         while(isRunning){
-            applyBoarders("Select from main menu");
+            applyBorders("Select from main menu");
             System.out.println(" 1) Search by location");
             System.out.println(" 2) Browse by type of place");
             System.out.println(" 3) Filter by rating");
@@ -39,7 +40,7 @@ public class CLI {
                 searchByRating();
                 break;
                 case 4:
-                applyBoarders("Quitting program.");
+                applyBorders("Quitting program.");
                 isRunning = false;
                 return;
                 default:
@@ -48,7 +49,7 @@ public class CLI {
         }
     }
 
-    public void applyBoarders(String message){//formatted messages
+    public void applyBorders(String message){//formatted messages
         System.out.println("--------------------------------------------------------------------------------");
         System.out.println("> " + message);
         System.out.println("--------------------------------------------------------------------------------");
@@ -66,7 +67,7 @@ public class CLI {
     }
 
 
-    public int verifyINT(){//takes input, handels errors and returns feedback
+    public int verifyINT(){//takes input int, handels errors and returns feedback
             try {
                 int input = Integer.parseInt(scanner.nextLine().trim());//using linereader than parsing for err handeling and residue
                 if (input <= 0){
@@ -81,10 +82,10 @@ public class CLI {
             }
     }
 
-    public double verifyDouble() { //takes input, handels errors and returns feedback
+    public double verifyDouble() { //takes input double, handels errors and returns feedback
         try {
             double input = Double.parseDouble(scanner.nextLine().trim());
-            if (input <= 0) {
+            if (input < 0) {
                 erorrMessage("Input must be greater than 0.");
                 return -1;
             } else {
@@ -96,11 +97,11 @@ public class CLI {
         }
     }
 
-    public String verifyString() {//takes input, cleans it, handels errors and returns feedback
+    public String verifyString() {//takes input string, cleans it, handels errors and returns feedback
         try {
             String input = scanner.nextLine().trim().toLowerCase();
             if (input.isEmpty()) {
-                erorrMessage("Please enter a non-empty value.");
+                erorrMessage("Field cannot be empty.");
                 return "error";
             } else{
              return input;   
@@ -111,36 +112,73 @@ public class CLI {
         }
     }
 
-    public LocalDate verifyDate() { // takes input, handles errors, returns feedback
-    try {
+    public boolean verifyBoolean() {//takes input boolean, cleans it, handels errors and returns feedback
+        try {
+            String input = scanner.nextLine().trim().toLowerCase();//didnt Boolean.parseBoolean() because i couldnt compare other values
 
-        String input = scanner.nextLine().trim();
-        LocalDate dateInput = LocalDate.parse(input);
-
-        if (input.isEmpty()) {
-            erorrMessage("Field incomplete.");
-            return null;
-        } else if (today.isAfter(dateInput)){
-            erorrMessage("Date must be in the future.");
-            return null;
-        } else {
-           return dateInput; 
+            if (input.equals("true") || input.equals("y") || input.equals("yes")) {
+                return true;
+            } else if (input.equals("false") || input.equals("n") || input.equals("no")) {
+                return false;
+            } else {
+                erorrMessage("Wrong input.");
+                return false;
+            }
+        } catch (Exception e) {
+            erorrMessage("Wrong input.");
+            return false;
         }
-    } catch (DateTimeParseException e) {
-        erorrMessage("Invalid date, Use yyyy-mm-dd.");
-        return null;
-    } catch (Exception e) {
-        erorrMessage("Input error.");
-        return null;
     }
-}
+
+    public LocalDate verifyDate() { // takes input datetime, handles errors, returns feedback
+        try {
+
+            String input = scanner.nextLine().trim();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate FormattedDate = LocalDate.parse(input, format);
+
+            if (input.isEmpty()) {
+                erorrMessage("Field incomplete.");
+                return null;
+            } else if (today.isAfter(FormattedDate)){
+                erorrMessage("Date must be in the future.");
+                return null;
+            } else {
+            return FormattedDate; 
+            }
+        } catch (DateTimeParseException e) {
+            erorrMessage("Invalid date, Use dd/MM/yyyy.");
+            return null;
+        } catch (Exception e) {
+            erorrMessage("Wrong input.");
+            return null;
+        }
+    }
+
+    public String verifyEmail() {// takes input email string, cleans it, handels errors and returns feedback
+        try {
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.isEmpty()) {
+                erorrMessage("Please enter a non empty value.");
+                return "error";
+            } else if (!input.contains("@") || !input.contains(".com")){
+                erorrMessage("Field cannot be empty.");
+                return "error";
+            } else {
+                return input;
+            }
+        } catch (Exception e) {
+            erorrMessage("Input error.");
+            return "error";
+        }
+    }
 
     public void itirateCurrentProperties(){
         for (int i = 0; i < currentProperties.size(); i++) {
             Property property = currentProperties.get(i);
-            System.out.printf("%d) %s ( %s, %s )  Rating: %.1f  $%.2f/night%n",
-                    i + 1, property.getName(), property.getType(), property.getLocation(), property.getRating(),
-                    property.getPricePerNight());
+            System.out.printf("%d) %s ( %s, %s, guests: %d )  Rating: %.1f  $%.2f/night%n",
+                    i + 1, property.getName(), property.getType(), property.getLocation(), 
+                    property.getMaximumNumberOfGuests(), property.getRating(),property.getPricePerNight());
         }
         
     }
@@ -155,7 +193,7 @@ public class CLI {
             return -1;
         } else {
             currentProperty = currentProperties.get(choice -1 );
-            bookProperty();
+            getBookingDetails();
             return -3;
         }
     }
@@ -172,7 +210,7 @@ public class CLI {
                 currentProperties = propertyDatabase.search(locationInput);//store filtered properties within list
             }
 
-            applyBoarders("Select from matching list");//itirares through list and prints with placeholders
+            applyBorders("Select from matching list");//itirares through list and prints with placeholders
             itirateCurrentProperties();
 
             int quitBtn = currentProperties.size()+1;//dynamic numbering of quit btn
@@ -197,7 +235,7 @@ public class CLI {
 
         while (true) {
 
-            applyBoarders("Browse by type of place");// i have chosen to hardcode the available types
+            applyBorders("Browse by type of place");// i have chosen to hardcode the available types
             System.out.println(" 1) Private room");// still works perfectly with current data set but not dynamic
             System.out.println(" 2) Entire place");
             System.out.println(" 3) Shared room");
@@ -224,7 +262,7 @@ public class CLI {
                 type = "Shared room";
             }
 
-            applyBoarders("Select from entire place list");
+            applyBorders("Select from entire place list");
             currentProperties  = propertyDatabase.filterByPropertyType(type);//grabs the list of filtered properties
             itirateCurrentProperties();//itirates and prints all filtered properties
 
@@ -248,7 +286,7 @@ public class CLI {
     public void searchByRating() {//filters properties by rating
 
         while (true) {
-            System.out.print("Please provide the minimum rating: ");
+            System.out.print("Please provide the minimum rating (0-5): ");
             double rating = verifyDouble();// grabs the min rating
             
             if (rating == -1) {//handles input
@@ -260,7 +298,7 @@ public class CLI {
                 currentProperties = propertyDatabase.filterByPropertyRating(rating);//store filtered properties within list
             }
 
-            applyBoarders("Select from matching list");
+            applyBorders("Select from matching list");
             itirateCurrentProperties();
 
             int quitBtn = currentProperties.size() + 1;
@@ -281,15 +319,16 @@ public class CLI {
     }
 
 
-    public void bookProperty(){
-          
+    public void getBookingDetails(){
+        
         while(true){
 
-            applyBoarders("Provide dates");
-            System.out.print("Check-in (yyyy-mm-dd): ");
+            applyBorders("Provide dates");
+            System.out.print("Please provide check-in date (dd/mm/yyyy): ");
             LocalDate checkIn = verifyDate();
-            System.out.print("Check-in (yyyy-mm-dd): ");
+            System.out.print("Please provide checkout date (dd/mm/yyyy): ");
             LocalDate checkOut = verifyDate();
+
             if (checkIn == null || checkOut == null) {
                 continue; 
             } else if (checkIn.isAfter(checkOut)){
@@ -297,8 +336,65 @@ public class CLI {
                 continue;
             }
 
-            applyBoarders("Show property details");
+            currentBooking = new Booking( "", "", currentProperty.getName(),
+            currentProperty.getHostName(), 1, checkIn, checkOut, 0.0, false);
+            costCalculations = new CostCalculations(currentProperty, currentBooking);
+            costCalculations.applyPricing();
 
+            applyBorders("Show property details");
+            System.out.println(currentProperty);
+            System.out.print(costCalculations);
+            System.out.println("Would you like to reserve the property (Y/N)? ");
+            boolean isReserved = verifyBoolean(); if (!isReserved){ 
+                return;
+            } else {
+                bookProperty();
+                break;
+            }
+
+
+        }
+    }
+
+    public void bookProperty(){
+        while(true){
+
+            applyBorders("Provide personal information");
+            System.out.print("Please provide your given name: ");
+            String customerFirstName = verifyString();
+            System.out.print("Please provide your surname: ");
+            String customerLastName = verifyString();
+            System.out.print("Please provide your email address: ");
+            String customerEmail = verifyEmail();
+            if ("error".equals(customerFirstName) || "error".equals(customerLastName) || "error".equals(customerEmail)) {
+                erorrMessage("Wrong input");
+                continue;
+            }
+
+            System.out.print("Please provide number of guests: ");
+            int guests = verifyINT();
+            int guestCapacity = currentProperty.getMaximumNumberOfGuests();
+            if (guests > guestCapacity) {
+                erorrMessage("Property gues capacity is " + guestCapacity);
+                continue;
+            }
+
+            System.out.println("Confirm and pay (Y/N): ");
+            boolean isConfirmed = verifyBoolean();
+            if (!isConfirmed) {
+                return;
+            } else {
+                currentBooking.setCustomerName(customerFirstName + " " + customerLastName);
+                currentBooking.setCustomerEmail(customerEmail);
+                currentBooking.setNumOfGuests(guests);
+                currentBooking.setTotalAmount(costCalculations.grandTotal());
+            }
+
+            applyBorders("Your trip is booked. A receipt has been sent to your email.\r\n" +
+                    " Details of your trip are shown below.\r\n" +
+                    " Your host will contact you before your trip. Enjoy your stay!");
+
+            System.out.println(currentBooking);
         }
     }
 

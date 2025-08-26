@@ -13,11 +13,11 @@ public class Booking {
     private LocalDate checkOutDate;
     private double totalAmount;
     private boolean isDiscounted;
-    private double discountedPricePerNight;
+
     
     //class contructor method
     public Booking(String customerName, String customerEmail, String selectedProperty, String propertyHostName, 
-            int numOfGuests, LocalDate checkInDate, LocalDate checkOutDate, double totalAmount, boolean isDiscounted, double discountedPricePerNight){
+            int numOfGuests, LocalDate checkInDate, LocalDate checkOutDate, double totalAmount, boolean isDiscounted){
 
                 this.customerName = customerName;
                 this.customerEmail = customerEmail;
@@ -28,7 +28,7 @@ public class Booking {
                 this.checkOutDate = checkOutDate;
                 this.totalAmount = totalAmount;
                 this.isDiscounted = isDiscounted;
-                this.discountedPricePerNight = discountedPricePerNight;
+
     }
 
     //getter and setter methods
@@ -75,9 +75,6 @@ public class Booking {
 
 
     public int getStayDuration() {
-        if (checkInDate == null || checkOutDate == null) {
-            System.err.println("Dates fields incomplete");//will sort err handeling later
-        }
         long days = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
         if (days <= 0)
             System.err.println("Checkout date must be diffrent to Checkin");
@@ -92,27 +89,20 @@ public class Booking {
 
     public void setIsDiscounted(boolean isDiscounted) {        this.isDiscounted = isDiscounted;    }
 
-    public double getDiscountedPricePerNight() {        return discountedPricePerNight;    }
 
-    public void setDiscountedPricePerNight(double discountedPricePerNight) {this.discountedPricePerNight = discountedPricePerNight;}
-    
     //tostring method
     @Override
     public String toString() {
-        return "Booking" +
-                " Name: " + customerName + 
-                " Email: " + customerEmail + 
-                " Your Stay: " + selectedProperty + 
-                " Your Host" + propertyHostName + 
-                " Number Of Guests: " + numOfGuests + 
-                " Staying From: " + checkInDate + " - "+ checkOutDate +
-                " Total Paid: " + totalAmount;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("%-30s%s%n", "Name:", customerName));
+        sb.append(String.format("%-30s%s%n", "Email:", customerEmail) );
+        sb.append(String.format("%-30s%s hosted%n", "Your stay:", selectedProperty));
+        sb.append(String.format("%-30sby %s%n", "", propertyHostName) );
+        sb.append(String.format("%-30s%d%n", "Who's coming:", numOfGuests));
+        sb.append(String.format("%-30s%s%n", "Check-in date:", checkInDate));
+        sb.append(String.format("%-30s%s%n", "Checkout date:", checkOutDate));
+        sb.append(String.format("%-30s%.2f%n", "Total payment:", totalAmount)); 
+        return sb.toString();
     }
-
-
-
-    // The program will ask the user to reserve the property.
-    // The user will be asked to provide check-in and checkout dates.
-    // the program will print the information of the selected property
-    //
 }

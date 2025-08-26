@@ -1,64 +1,108 @@
 public final class CostCalculations {//holds all cost calculation related functions that i could think of but yet to be implimented
     private static final int week = 7;
+    private Property property;
+    private Booking booking;
+    private int stayDuration;
+
     
-    private CostCalculations() {}//empty constructor
-
-
-    public static int stayDuration(Booking booking) {//a getter for a getter might change
-        return booking.getStayDuration();
+    public CostCalculations(Property property, Booking booking) {
+        this.property = property;
+        this.booking = booking;
+        this.stayDuration = booking.getStayDuration();
     }
 
-    public static boolean isDiscounted(Property property, Booking booking) {//checks if a property 
-        if (stayDuration(booking) >= week && property.getWeeklyDiscount() > 0) {
+
+    public static int getWeek() {        return week;    }
+
+
+    public Property getProperty() {        return property;    }
+
+
+    public void setProperty(Property property) {        this.property = property;    }
+
+
+    public Booking getBooking() {        return booking;    }
+
+
+    public void setBooking(Booking booking) {        this.booking = booking;    }
+
+
+    public int getStayDuration() {        return stayDuration;    }
+
+
+    public void setStayDuration(int stayDuration) {        this.stayDuration = stayDuration;    }
+
+
+
+
+    public boolean isDiscounted() {//checks if a property dicount eligable 
+        if (stayDuration >= week && property.getWeeklyDiscount() > 0) {
             return true;
         } else {
             return false;
         }
     }
 
-    public static double baseNightly(Property property) {//price per night might change
+    public double baseNightly() {//price per night might change
         return property.getPricePerNight();
     }
 
 
-    public static double nightlyRateAfterDiscount(Property property, Booking booking) {//discounted rate per night
-        double basePrice = baseNightly(property);
-        if (isDiscounted(property, booking)) {
+    public double nightlyRateAfterDiscount() {//discounted rate per night
+        double basePrice = baseNightly();
+        if (isDiscounted()) {
             return basePrice * (1 - (property.getWeeklyDiscount() / 100.0));
         }
         return basePrice;
     }
 
 
-    public static double accommodationTotalNoDiscount(Property property, Booking booking) {//total withoutdiscount
-        return baseNightly(property) * stayDuration(booking);
+    public double accommodationTotalNoDiscount() {//total withoutdiscount
+        return baseNightly() * stayDuration;
     }
 
 
-    public static double accommodationTotalWithDiscount(Property property, Booking booking) {//total before discount
-        return nightlyRateAfterDiscount(property, booking) * stayDuration(booking);
+    public double accommodationTotalWithDiscount() {//total before discount
+        return nightlyRateAfterDiscount() * stayDuration;
     }
 
-    public static double serviceFeeTotal(Property property, Booking booking) {//total service fee
-        return property.getServiceFeePerNight() * stayDuration(booking);
+    public double serviceFeeTotal() {//total service fee
+        return property.getServiceFeePerNight() * stayDuration;
     }
 
-    public static double cleaningFee(Property property) {//cleaningfee
+    public double cleaningFee() {//cleaningfee
         return property.getCleaningFee();
     }
 
 
-    public static double grandTotal(Property property, Booking booking) {
-        return accommodationTotalWithDiscount(property, booking) + serviceFeeTotal(property, booking)
-                + cleaningFee(property);
+    public double grandTotal() {
+        return accommodationTotalWithDiscount() + serviceFeeTotal() + cleaningFee();
     }
 
  
-    public static void applyPricing(Property property, Booking booking) {//ties everything together for less cluter
-        boolean discount = isDiscounted(property, booking);
-        booking.setIsDiscounted(discount);
-        booking.setDiscountedPricePerNight(nightlyRateAfterDiscount(property, booking));
-        booking.setTotalAmount(grandTotal(property, booking));//not yet impelimented so i might change later
+    public void applyPricing() {
+
+        booking.setTotalAmount(grandTotal());//set all financial bookingfields
+        boolean isDiscounted = isDiscounted();
+        booking.setIsDiscounted(isDiscounted);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if (isDiscounted()){
+            sb.append(String.format("%-30s$%.2f ($%.2f * %d nights)%n", "Room price:", accommodationTotalNoDiscount(), baseNightly(), stayDuration));
+            sb.append(String.format("%-30s$%.2f ($%.2f * %d nights)%n", "Discounted room price:", accommodationTotalWithDiscount(), nightlyRateAfterDiscount(), stayDuration));
+        } else{
+            sb.append(String.format("%-30s$%.2f ($%.2f * %d nights)%n", "Room price:", accommodationTotalNoDiscount(), baseNightly(), stayDuration));
+        }
+        sb.append(String.format("%-30s$%.2f%n", "Service fee:", serviceFeeTotal()));
+        sb.append(String.format("%-30s$%.2f%n", "Cleaning fee:", cleaningFee()));
+        sb.append(String.format("%-30s$%.2f%n", "Total:", grandTotal()));
+
+
+
+        return sb.toString();
     }
 }
 

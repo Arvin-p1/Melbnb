@@ -50,13 +50,18 @@ public class Property {//blueprint, getters, setters for object instances
 
     public int getWeeklyDiscount() {        return weeklyDiscount;    }
 
-    @Override// to string
+    @Override
     public String toString() {
-        return "Property [name=" + name + ", location=" + location + ", description=" + description + ", type=" + type
-                + ", hostName=" + hostName + ", maximumNumberOfGuests=" + maximumNumberOfGuests + ", rating=" + rating
-                + ", pricePerNight=" + pricePerNight + ", serviceFeePerNight=" + serviceFeePerNight + ", cleaningFee="
-                + cleaningFee + ", weeklyDiscount="  + weeklyDiscount;
-    }
+        StringBuilder sb = new StringBuilder();
 
+        sb.append(String.format("%-30s%s hosted%n", "Property:", name));
+        sb.append(String.format("%-30sby %s%n", "", hostName) );
+        sb.append(String.format("%-30s%s%n", "Type of place:", type));
+        sb.append(String.format("%-30s%s%n", "Location:", location));
+        sb.append(String.format("%-30s%.2f%n", "Rating:", rating));
+        sb.append(String.format("%-30s%s%n", "Description:", description));
+        sb.append(String.format("%-30s%d%n", "Guests capacity:", maximumNumberOfGuests)); 
+        return sb.toString();
+    }
     
-}
+} 
