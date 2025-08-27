@@ -416,7 +416,7 @@ public class CLI {
                                 "  Your host will contact you before your trip. Enjoy your stay!");
 
             System.out.println(currentBooking);//print booking after confirmation msg
-            return;
+            System.exit(1);
         }
     }
 }

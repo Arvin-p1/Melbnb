@@ -4,7 +4,7 @@ This CLI Java application lets users search, browse, filter, and book Melbourne 
 
 ## Key Features
 - **Property search:** Search by location , browse by type, or filter by minimum rating.(case-insensitive)
-- **Booking:** Collects check-in/checkout dates (dd/MM/yyyy), shows full price breakdown including discounts when eligible, confirms choices and collects guest details. Shows  confirmation messages with details.
+- **Booking:** Collects check-in/checkout dates (dd/MM/yyyy), shows full price breakdown including discounts when eligible, confirms choices and collects guest details. Shows  confirmation messages with details then quits the program.
 - **Validation & exceptions:** Includes input parsing for numbers/dates/emails, re-prompts on invalid input, and specific exceptions for all input types and scenarios.
 - **File I/O:** Automatically loads property data from `Melbnb.csv` at startup.
 - **Output formatting:** All currency shown with two decimal places and aligned, fixed width labels for readability.
@@ -35,6 +35,7 @@ This CLI Java application lets users search, browse, filter, and book Melbourne 
 - [Stackoverflow-Align all the strings in proper way using String.format java](https://stackoverflow.com/questions/58150457/align-all-the-strings-in-proper-way-using-string-format-java)
 - [Stackoverflow-Java regular expression OR operator](https://stackoverflow.com/questions/2031805/java-regular-expression-or-operator )
 - [Stckoverflow-complex regular expression in Java](https://stackoverflow.com/questions/31713523/complex-regular-expression-in-java )
+- [Stckoverflow-Terminating a Java Program](https://stackoverflow.com/questions/22452930/terminating-a-java-program)
 - [Codemia-Calculate days between two Dates in Java 8](https://codemia.io/knowledge-hub/path/calculate_days_between_two_dates_in_java_8)
 - [Digitalocean-Master Java Date Formatting: SimpleDateFormat & DateFormat Guide](https://www.digitalocean.com/community/tutorials/java-simpledateformat-java-date-format )
 - [GithubGist-Terminal emojis.](https://gist.github.com/nicolasdao/8f0220d050f585be1b56cc615ef6c12e)
