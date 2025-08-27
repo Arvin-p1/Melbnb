@@ -5,13 +5,13 @@ public final class CostCalculations {//holds all cost calculation related functi
     private int stayDuration;
 
     
-    public CostCalculations(Property property, Booking booking) {
+    public CostCalculations(Property property, Booking booking) {// class constructor method
         this.property = property;
         this.booking = booking;
         this.stayDuration = booking.getStayDuration();
     }
 
-
+    //Getters and setters
     public static int getWeek() {        return week;    }
 
 
@@ -75,7 +75,7 @@ public final class CostCalculations {//holds all cost calculation related functi
     }
 
 
-    public double grandTotal() {
+    public double grandTotal() {//grabs total
         return accommodationTotalWithDiscount() + serviceFeeTotal() + cleaningFee();
     }
 
@@ -87,6 +87,7 @@ public final class CostCalculations {//holds all cost calculation related functi
         booking.setIsDiscounted(isDiscounted);
     }
 
+    //dynamic to string method. it prints discounted price only if discounted
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -99,9 +100,7 @@ public final class CostCalculations {//holds all cost calculation related functi
         sb.append(String.format("%-30s$%.2f%n", "Service fee:", serviceFeeTotal()));
         sb.append(String.format("%-30s$%.2f%n", "Cleaning fee:", cleaningFee()));
         sb.append(String.format("%-30s$%.2f%n", "Total:", grandTotal()));
-
-
-
+        
         return sb.toString();
     }
 }

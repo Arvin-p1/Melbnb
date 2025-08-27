@@ -6,9 +6,10 @@ import java.io.FileNotFoundException;
 
 
 public class PropertyDatabase implements Searchable<Property> {
-    private ArrayList<Property> properties = new ArrayList<>();
+    private ArrayList<Property> properties = new ArrayList<>();//Holds all properties
 
-    public PropertyDatabase(String csvFilePath){//class contructor method
+
+    public PropertyDatabase(String csvFilePath){//class contructor method which loads cvs after being initiated
         loadCSV(csvFilePath);
     }
 
@@ -29,12 +30,7 @@ public class PropertyDatabase implements Searchable<Property> {
     }
 
     public List<Property> filterByPropertyType(String keyword){//filters by type category
-        String type;
-        if( keyword == null || keyword.trim().isEmpty()){
-            throw new IllegalArgumentException("Incorrect Type");
-        }else{
-            type = keyword.trim().toLowerCase();
-        }
+        String type = keyword.trim().toLowerCase();
 
         List<Property> matchedProperties = new ArrayList<>();
 
@@ -97,12 +93,10 @@ public class PropertyDatabase implements Searchable<Property> {
             System.out.println("CSV file not found at : " + csvFilePath);
         }
     }
+
+    public ArrayList<Property> getProperties() {//getter that returns all propeties
+        return properties;
+    }
+
 }
 
-    // The user can then choose one from the returned lists to book
-    // to string information of a selected property should include the name of the property, host, location, 
-    //   type of place description, maximum number of guests, rating, total price without discount for the period of
-    //   stay with price breakdown (i.e., price per night * number of nights), total price with discount
-    //   for the period of stay with price breakdown (i.e., discounted price per night * number of
-    //   nights) if discount is applied, total service fee with fee breakdown (i.e., service fee per night *
-    //   number of nights), cleaning fee, and total payment.

@@ -50,6 +50,7 @@ public class Property {//blueprint, getters, setters for object instances
 
     public int getWeeklyDiscount() {        return weeklyDiscount;    }
 
+    //to string with stringbuilder
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

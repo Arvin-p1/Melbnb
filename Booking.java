@@ -1,9 +1,8 @@
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-//blueprint, getters, setters for object instances
-public class Booking {
 
+public class Booking {
     private String customerName;
     private String customerEmail;
     private String selectedProperty;
@@ -90,7 +89,7 @@ public class Booking {
     public void setIsDiscounted(boolean isDiscounted) {        this.isDiscounted = isDiscounted;    }
 
 
-    //tostring method
+    //tostring method with stringbuilder
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

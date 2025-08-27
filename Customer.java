@@ -8,6 +8,7 @@ public class Customer {// blueprint, getters, setters for object instances
         this.customerEmail = customerEmail;
     }
 
+    //getters and setters
     public String getCustomerFullName() {
         return customerFullName;
     }
@@ -24,6 +25,7 @@ public class Customer {// blueprint, getters, setters for object instances
         this.customerEmail = customerEmail;
     }
 
+    //simple generated to string method
     @Override
     public String toString() {
         return "Customer [customerFullName=" + customerFullName + ", customerEmail=" + customerEmail + "]";
