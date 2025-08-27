@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CLI {
+    private List<Property> currentProperties;// list of all filtered objects to be stored and accessed
     private Property currentProperty;//variables where the selected instances can be stored and accessed
-    private List<Property> currentProperties;//list of all filtered objects to be stored and accessed
+    private Customer currentCustomer;
     private Booking currentBooking;
-    private CostCalculations costCalculations;
+    private CostCalculations currentCostCalculations;
     private LocalDate today = LocalDate.now();
     private String csvPath = "./Melbnb.csv";
     private Scanner scanner = new Scanner(System.in);
@@ -319,32 +320,33 @@ public class CLI {
     }
 
 
-    public void getBookingDetails(){
+    public void getBookingDetails(){// grabs and veifies booking details, prints booking details w/o confirmation
         
         while(true){
 
-            applyBorders("Provide dates");
+            applyBorders("Provide dates");//grabs the dates
             System.out.print("Please provide check-in date (dd/mm/yyyy): ");
             LocalDate checkIn = verifyDate();
             System.out.print("Please provide checkout date (dd/mm/yyyy): ");
             LocalDate checkOut = verifyDate();
 
-            if (checkIn == null || checkOut == null) {
+            if (checkIn == null || checkOut == null) {//checks for correct inputs
                 continue; 
             } else if (checkIn.isAfter(checkOut)){
                 erorrMessage("Check-in has to be before Check-out");
                 continue;
             }
 
-            currentBooking = new Booking( "", "", currentProperty.getName(),
+            currentBooking = new Booking( "", "", currentProperty.getName(),//make new booking instance with some empty fields
             currentProperty.getHostName(), 1, checkIn, checkOut, 0.0, false);
-            costCalculations = new CostCalculations(currentProperty, currentBooking);
-            costCalculations.applyPricing();
 
-            applyBorders("Show property details");
+            currentCostCalculations = new CostCalculations(currentProperty, currentBooking);//get the calculations of the booking and property
+            currentCostCalculations.applyPricing();//sets values for booking.total and booking.isdiscounted
+
+            applyBorders("Show property details");//print the property and cost breakdowns
             System.out.println(currentProperty);
-            System.out.print(costCalculations);
-            System.out.println("Would you like to reserve the property (Y/N)? ");
+            System.out.print(currentCostCalculations);
+            System.out.println("Would you like to reserve the property (Y/N)? ");//confirm if they want to book
             boolean isReserved = verifyBoolean(); if (!isReserved){ 
                 return;
             } else {
@@ -356,10 +358,11 @@ public class CLI {
         }
     }
 
-    public void bookProperty(){
+    public void bookProperty(){//grabs final details and confirms before grabbing payment
+
         while(true){
 
-            applyBorders("Provide personal information");
+            applyBorders("Provide personal information");//grab info and veify right away
             System.out.print("Please provide your given name: ");
             String customerFirstName = verifyString();
             System.out.print("Please provide your surname: ");
@@ -367,14 +370,14 @@ public class CLI {
             System.out.print("Please provide your email address: ");
             String customerEmail = verifyEmail();
             if ("error".equals(customerFirstName) || "error".equals(customerLastName) || "error".equals(customerEmail)) {
-                erorrMessage("Wrong input");
+                erorrMessage("Incorrect input.");
                 continue;
             }
 
-            System.out.print("Please provide number of guests: ");
-            int guests = verifyINT();
+            System.out.print("Please provide number of guests: ");//ensure the !guests coming > space availabe 
+            int NumOfGuests = verifyINT();
             int guestCapacity = currentProperty.getMaximumNumberOfGuests();
-            if (guests > guestCapacity) {
+            if (NumOfGuests > guestCapacity) {
                 erorrMessage("Property gues capacity is " + guestCapacity);
                 continue;
             }
@@ -384,10 +387,11 @@ public class CLI {
             if (!isConfirmed) {
                 return;
             } else {
-                currentBooking.setCustomerName(customerFirstName + " " + customerLastName);
-                currentBooking.setCustomerEmail(customerEmail);
-                currentBooking.setNumOfGuests(guests);
-                currentBooking.setTotalAmount(costCalculations.grandTotal());
+                currentCustomer = new Customer(customerFirstName + " " + customerLastName, customerEmail);
+                currentBooking.setCustomerName(currentCustomer.getCustomerFullName());
+                currentBooking.setCustomerEmail(currentCustomer.getCustomerEmail());
+                currentBooking.setNumOfGuests(NumOfGuests);
+                currentBooking.setTotalAmount(currentCostCalculations.grandTotal());
             }
 
             applyBorders("Your trip is booked. A receipt has been sent to your email.\r\n" +

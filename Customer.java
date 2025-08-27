@@ -1,35 +1,35 @@
 
 public class Customer {// blueprint, getters, setters for object instances
-    private String customerName;
-    private String customerSurname;
+    private String customerFullName;
     private String customerEmail;
 
-    public Customer(String customerName, String customerSurname, String customerEmail) {//constructor method
-        this.customerName = customerName;
-        this.customerSurname = customerSurname;
+    public Customer(String customerFullName, String customerEmail) {//constructor method
+        this.customerFullName= customerFullName;
         this.customerEmail = customerEmail;
     }
 
-    //getters and setters
-    public String getCustomerName() {        return customerName;    }
+    public String getCustomerFullName() {
+        return customerFullName;
+    }
 
-    public void setCustomerName(String customerName) {        this.customerName = customerName;    }
+    public void setCustomerFullName(String customerFullName) {
+        this.customerFullName = customerFullName;
+    }
 
-    public String getCustomerSurname() {        return customerSurname;    }
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
 
-    public void setCustomerSurname(String customerSurname) {        this.customerSurname = customerSurname;    }
-
-    public String getFullName() {        return customerName + " " + customerSurname;    }
-
-    public String getCustomerEmail() {        return customerEmail;    }
-
-    public void setCustomerEmail(String customerEmail) {        this.customerEmail = customerEmail;    }
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
+    }
 
     @Override
     public String toString() {
-        return "Customer [customerName=" + customerName + ", customerSurname=" + customerSurname + ", customerEmail="
-                + customerEmail + "]";
+        return "Customer [customerFullName=" + customerFullName + ", customerEmail=" + customerEmail + "]";
     }
+
+    
     
     
 }
