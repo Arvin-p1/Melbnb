@@ -51,17 +51,29 @@ public class Property {//blueprint, getters, setters for object instances
     public int getWeeklyDiscount() {        return weeklyDiscount;    }
 
     //to string with stringbuilder
+
+    private static String formatRow(String label, String value) {//created my own formatting
+
+        String left = String.format("%-30s", label);//string on left side with 30"" gap
+
+        value = value.replaceAll("(.{1,50})(\s|$)", "$1\n").trim().replaceAll("\n", "\n" + " ".repeat(30));
+        //find just one charachter from 1 to 50 characters then 
+        // n{x,y} Matches any string that contains a sequence of X to Y n's
+        //.	Find just one instance of any character
+        // \s Find a whitespace character
+        return left + value + "\n";
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
-        sb.append(String.format("%-30s%s hosted%n", "Property:", name));
-        sb.append(String.format("%-30sby %s%n", "", hostName) );
-        sb.append(String.format("%-30s%s%n", "Type of place:", type));
-        sb.append(String.format("%-30s%s%n", "Location:", location));
-        sb.append(String.format("%-30s%.2f%n", "Rating:", rating));
-        sb.append(String.format("%-30s%s%n", "Description:", description));
-        sb.append(String.format("%-30s%d%n", "Guests capacity:", maximumNumberOfGuests)); 
+        sb.append(formatRow("Property:", name + " hosted"));
+        sb.append(formatRow("", "by " + hostName));
+        sb.append(formatRow("Type of place:", type));
+        sb.append(formatRow("Location:", location));
+        sb.append(formatRow("Rating:", String.format("%.2f", rating)));
+        sb.append(formatRow("Description:", description));
+        sb.append(formatRow("Guests capacity:", String.valueOf(maximumNumberOfGuests)));
         return sb.toString();
     }
     

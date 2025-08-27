@@ -146,9 +146,9 @@ public class CLI {
     public void itirateCurrentProperties(){//prints list of properties, streamlined repetetive code
         for (int i = 0; i < currentProperties.size(); i++) {
             Property property = currentProperties.get(i);
-            System.out.printf("%d) %s ( %s, %s, guests: %d )  Rating: %.1f  $%.2f/night%n",
-                    i + 1, property.getName(), property.getType(), property.getLocation(), 
-                    property.getMaximumNumberOfGuests(), property.getRating(),property.getPricePerNight());
+            System.out.printf("%d) %s 👤: %d , %.2f💲/🌘%n",
+                    i + 1, property.getName(), property.getMaximumNumberOfGuests(), 
+                    property.getPricePerNight());
         }
         
     }
