@@ -19,7 +19,7 @@ public class PropertyDatabase implements Searchable<Property> {
         List<Property> matchedProperties = new ArrayList<>();
 
         for (Property property : properties){
-            if (property.getLocation().toLowerCase().contains(location)){
+            if (property.getLocation().toLowerCase().contains(location.toLowerCase())){
                 matchedProperties.add(property);
             }
         }
@@ -45,7 +45,7 @@ public class PropertyDatabase implements Searchable<Property> {
         return matchedProperties;
     }
 
-    public List<Property> filterByPropertyRating(double rating){//had to use Double rather than double to compare to null
+    public List<Property> filterByPropertyRating(double rating){//had to use double rather than Double to compare to null
 
         List<Property> matchedProperties = new ArrayList<>();//polymorphism
 

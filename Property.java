@@ -56,12 +56,13 @@ public class Property {//blueprint, getters, setters for object instances
 
         String left = String.format("%-30s", label);//string on left side with 30"" gap
 
-        value = value.replaceAll("(.{1,50})(\s|$)", "$1\n").trim().replaceAll("\n", "\n" + " ".repeat(30));
+        value = value.replaceAll("(.{1,50})(\\s|$)", "$1\n").trim().replaceAll("\n", "\n" + " ".repeat(30));
         //find just one charachter from 1 to 50 characters then 
         // n{x,y} Matches any string that contains a sequence of X to Y n's
         //.	Find just one instance of any character
         // $ Finds a match at the end of the string
         // |or \s Find a whitespace character
+        // to represent the literal \s in a regex pattern, you must write \\s
         return left + value + "\n";
     }
 

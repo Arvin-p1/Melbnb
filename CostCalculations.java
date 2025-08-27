@@ -100,14 +100,8 @@ public final class CostCalculations {//holds all cost calculation related functi
         sb.append(String.format("%-30s$%.2f%n", "Service fee:", serviceFeeTotal()));
         sb.append(String.format("%-30s$%.2f%n", "Cleaning fee:", cleaningFee()));
         sb.append(String.format("%-30s$%.2f%n", "Total:", grandTotal()));
-        
+
         return sb.toString();
     }
 }
 
-
-//Cleaning fee is one-off. 
-//Weekly discount is only applied to the price per night if the period of the stay is equal to or over 7 nights.
-//There is no discount for service fee per night and cleaning fee.
-//For example, if a user books a property for 7 nights,the total payment with discount is calculated below:
-// (Price per night ∗ ((100 − Weekly discount) / 100) + Service fee per night) ∗ 7 + Cleaning fee

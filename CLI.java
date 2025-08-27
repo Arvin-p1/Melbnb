@@ -88,7 +88,7 @@ public class CLI {
                 errorMessage("Please enter a non empty value.");
                 return "error";
             } else if (!input.contains("@") || !input.contains(".com")) {
-                errorMessage("Field cannot be empty.");
+                errorMessage("Email must contain @ and .com eg abc@gmail.com");
                 return "error";
             } else {
                 return input;
@@ -350,7 +350,7 @@ public class CLI {
 
             if (checkIn == null || checkOut == null) {//checks for correct inputs
                 continue; 
-            } else if (checkIn.isAfter(checkOut)){
+            } else if (checkIn.isAfter(checkOut) || checkIn.equals(checkOut)){
                 errorMessage("Check-in has to be before Check-out");
                 continue;
             }
@@ -388,7 +388,6 @@ public class CLI {
             System.out.print("Please provide your email address: ");
             String customerEmail = verifyEmail();
             if ("error".equals(customerFirstName) || "error".equals(customerLastName) || "error".equals(customerEmail)) {
-                errorMessage("Incorrect input.");
                 continue;
             }
 
