@@ -4,8 +4,8 @@ This CLI Java application lets users search, browse, filter, and book Melbourne 
 
 ## Key Features
 - **Property search:** Search by location , browse by type, or filter by minimum rating.(case-insensitive)
-- **Booking:** Collects check-in/checkout dates (dd/MM/yyyy), shows full price breakdown including discounts when eligable, confirms choices and collects guest details. Shows  confirmation messages with details.
-- **Validation & exceptions:** Includes input parsing for numbers/dates/emails, re-prompts on invalid input, and specific exceptions for all input types and senarios.
+- **Booking:** Collects check-in/checkout dates (dd/MM/yyyy), shows full price breakdown including discounts when eligible, confirms choices and collects guest details. Shows  confirmation messages with details.
+- **Validation & exceptions:** Includes input parsing for numbers/dates/emails, re-prompts on invalid input, and specific exceptions for all input types and scenarios.
 - **File I/O:** Automatically loads property data from `Melbnb.csv` at startup.
 - **Output formatting:** All currency shown with two decimal places and aligned, fixed width labels for readability.
 
@@ -16,11 +16,11 @@ This CLI Java application lets users search, browse, filter, and book Melbourne 
 - **`Customer.java`** – Customer details used during booking.
 - **`Booking.java`** – Reservation details (customer, dates, guests, totals, property).
 - **`CostCalculations.java`** – Pricing/discount logic and printable breakdown also updates pricing fields of other classes.
-- **`CLI.java`** – Menu, input validation, and overall program flow cointains or calls all visual elements.
+- **`CLI.java`** – Menu, input validation, and overall program flow contains or calls all visual elements.
 - **`Main.java`** – Entry point to program.
 
 ## How to Run
-1. **Prerequisite:** Java 8+ installed in prefered IDE or code environment. Place `Melbnb.csv` in the project’s working directory.
+1. **Prerequisite:** Java 8+ installed in preferred IDE or code environment. Place `Melbnb.csv` in the project’s working directory.
 2. **Open terminal in program directory path then Compile & run:**
    
    javac *.java
