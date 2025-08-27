@@ -9,3 +9,4 @@ https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#replaceAll-java.
 https://www.w3schools.com/java/java_regex.asp
 https://stackoverflow.com/questions/2031805/java-regular-expression-or-operator
 https://stackoverflow.com/questions/31713523/complex-regular-expression-in-java
+https://gist.github.com/nicolasdao/8f0220d050f585be1b56cc615ef6c12e

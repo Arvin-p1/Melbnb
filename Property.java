@@ -60,7 +60,8 @@ public class Property {//blueprint, getters, setters for object instances
         //find just one charachter from 1 to 50 characters then 
         // n{x,y} Matches any string that contains a sequence of X to Y n's
         //.	Find just one instance of any character
-        // \s Find a whitespace character
+        // $ Finds a match at the end of the string
+        // |or \s Find a whitespace character
         return left + value + "\n";
     }
 
