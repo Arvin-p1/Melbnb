@@ -29,12 +29,12 @@ This CLI Java application lets users search, browse, filter, and book Melbourne 
 ## References
 
 
-[Oracle-Class String-replaceAll](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#replaceAll-java.lang.String-java.lang.String- )
-[W3schools-Java String format() Method](https://www.w3schools.com/java/ref_string_format.asp)
-[W3schools-What is a Regular Expression](https://www.w3schools.com/java/java_regex.asp) 
-[Stackoverflow-Align all the strings in proper way using String.format java](https://stackoverflow.com/questions/58150457/align-all-the-strings-in-proper-way-using-string-format-java)
-[Stackoverflow-Java regular expression OR operator](https://stackoverflow.com/questions/2031805/java-regular-expression-or-operator )
-[Stckoverflow-complex regular expression in Java](https://stackoverflow.com/questions/31713523/complex-regular-expression-in-java )
-[Codemia-Calculate days between two Dates in Java 8](https://codemia.io/knowledge-hub/path/calculate_days_between_two_dates_in_java_8)
-[Digitalocean-Master Java Date Formatting: SimpleDateFormat & DateFormat Guide](https://www.digitalocean.com/community/tutorials/java-simpledateformat-java-date-format )
-[GithubGist-Terminal emojis.](https://gist.github.com/nicolasdao/8f0220d050f585be1b56cc615ef6c12e)
+- [Oracle-Class String-replaceAll](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html#replaceAll-java.lang.String-java.lang.String- )
+- [W3schools-Java String format() Method](https://www.w3schools.com/java/ref_string_format.asp)
+- [W3schools-What is a Regular Expression](https://www.w3schools.com/java/java_regex.asp) 
+- [Stackoverflow-Align all the strings in proper way using String.format java](https://stackoverflow.com/questions/58150457/align-all-the-strings-in-proper-way-using-string-format-java)
+- [Stackoverflow-Java regular expression OR operator](https://stackoverflow.com/questions/2031805/java-regular-expression-or-operator )
+- [Stckoverflow-complex regular expression in Java](https://stackoverflow.com/questions/31713523/complex-regular-expression-in-java )
+- [Codemia-Calculate days between two Dates in Java 8](https://codemia.io/knowledge-hub/path/calculate_days_between_two_dates_in_java_8)
+- [Digitalocean-Master Java Date Formatting: SimpleDateFormat & DateFormat Guide](https://www.digitalocean.com/community/tutorials/java-simpledateformat-java-date-format )
+- [GithubGist-Terminal emojis.](https://gist.github.com/nicolasdao/8f0220d050f585be1b56cc615ef6c12e)
