@@ -73,7 +73,7 @@ public class Property {//blueprint, getters, setters for object instances
         sb.append(formatRow("", "by " + hostName));
         sb.append(formatRow("Type of place:", type));
         sb.append(formatRow("Location:", location));
-        sb.append(formatRow("Rating:", String.format("%.2f", rating)));
+        sb.append(formatRow("Rating:", String.format("%.2f/5", rating)));//turnm into string
         sb.append(formatRow("Description:", description));
         sb.append(formatRow("Guests capacity:", String.valueOf(maximumNumberOfGuests)));
         return sb.toString();

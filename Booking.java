@@ -101,7 +101,7 @@ public class Booking {
         sb.append(String.format("%-30s%d%n", "Who's coming:", numOfGuests));
         sb.append(String.format("%-30s%s%n", "Check-in date:", checkInDate));
         sb.append(String.format("%-30s%s%n", "Checkout date:", checkOutDate));
-        sb.append(String.format("%-30s%.2f%n", "Total payment:", totalAmount)); 
+        sb.append(String.format("%-30s$%.2f%n", "Total payment:", totalAmount)); 
         return sb.toString();
     }
 }
